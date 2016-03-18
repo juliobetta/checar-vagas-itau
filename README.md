@@ -20,7 +20,7 @@ O ideal é que este script seja executado periodicamente. Em ambientes UNIX exis
 
     crontab -e
 
-Logo após, im editor será exibido. A sintaxe do crontab é a seguinte:
+Logo após, um editor será exibido. A sintaxe do `crontab` é a seguinte:
 
     1 2 3 4 5 /caminho/para/comando arg1 arg2
 
