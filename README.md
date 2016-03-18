@@ -1,4 +1,4 @@
-# Check Itau
+# Checar Vagas no Itau
 
 Script para verificar se existem vagas de emprego no banco Itau em determinadas cidades.
 
