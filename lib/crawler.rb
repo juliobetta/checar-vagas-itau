@@ -6,6 +6,8 @@ class Crawler
 
   def initialize
     @jobs = []
+    @logger = Logger.new('check_itau.log')
+    @logger.datetime_format = '%Y-%m-%d %H:%M:%S'
   end
 
 
@@ -18,9 +20,11 @@ class Crawler
 
 
   def check_jobs_in(cities, page = 1)
-    @cities ||= cities
+    @cities        ||= cities
     @cities_params ||= get_cities_query_from cities
-    @json = self.fetch("#{Crawler::BASE_URL}?#{@cities_params}&page=#{page}")
+
+    @json = fetch("#{Crawler::BASE_URL}?#{@cities_params}&page=#{page}")
+
     @total_pages ||= @json['pagination']['page_count'].to_i
 
     @jobs.concat(@json['anuncios'])
@@ -37,15 +41,20 @@ class Crawler
 
 
   def then_notify(email_client)
+    cities = @cities.gsub(/#/, ', ')
+
     if @jobs.empty?
+      log "Nenhuma vaga encontrada para #{cities}"
       return
     end
 
-    message = "<h3>Vagas em #{@cities.gsub(/#/, ', ')}</h3>"
+    message = "<h3>Vagas em #{cities}</h3>"
 
     @jobs.each do |job|
       message << "<p><a href='#{job['url']}'>#{job['cargo']}</a></p>"
     end
+
+    log "#{@jobs.size} vagas encontradas para: #{cities}."
 
     email_client.send message
   end
@@ -57,4 +66,8 @@ class Crawler
     cities.split('#').map{|c| "c[]=#{c}" }.join('&')
   end
 
+
+  def log(message)
+    @logger.info message
+  end
 end
