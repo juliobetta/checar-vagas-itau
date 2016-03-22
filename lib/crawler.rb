@@ -41,7 +41,7 @@ class Crawler
 
 
   def then_notify(email_client)
-    cities = @cities.gsub(/#/, ', ')
+    cities = @cities.gsub(/\//, ', ')
 
     if @jobs.empty?
       log "Nenhuma vaga encontrada para #{cities}"
@@ -63,7 +63,7 @@ class Crawler
   private
 
   def get_cities_query_from(cities)
-    cities.split('#').map{|c| "c[]=#{c}" }.join('&')
+    cities.split('/').map{|c| "c[]=#{c}" }.join('&')
   end
 
 

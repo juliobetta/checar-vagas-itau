@@ -12,9 +12,9 @@ Depois, crie uma cópia do arquivo `.env.example` com o nome `.env` e preencha o
 
 E execute o seguinte comando:
 
-    rake crawler:run['cidade1#cidade2#cidade3', 'seu@email.com']
+    rake crawler:run['cidade1/cidade2/cidade3', 'seu@email.com']
 
-Substitua o nome das cidades de acordo com sua preferência e o email no qual as vagas serão enviadas. Note que o delimitador é o caractere `#`.
+Substitua o nome das cidades de acordo com sua preferência e o email no qual as vagas serão enviadas. Note que o delimitador é o caractere `/`.
 
 O ideal é que este script seja executado periodicamente. Em ambientes UNIX existe um serviço chamado `cron`. Para criar ou editar uma entrada, execute o seguinte comando:
 
@@ -35,4 +35,4 @@ Onde:
 
 Por exemplo, vamos agendar nosso comando para ser executado a cada quatro horas:
 
-    * */4 * * * cd /path/to/project && rake crawler:run['Rio de Janeiro','seu@email.com']
+    0 */4 * * * /bin/bash -l -c 'cd /path/to/project && rake "crawler:run[Rio de Janeiro,seu@email.com]"'
